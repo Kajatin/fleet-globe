@@ -106,7 +106,7 @@ async function main() {
       // broadcast to all clients
       for (const connId in clients) {
         const client = clients[connId];
-        client.ws.send(JSON.stringify({ coords: coords }));
+        client.ws.send(JSON.stringify({ coords: coords, serial: serial }));
       }
     }
 
