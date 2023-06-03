@@ -24,9 +24,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY --from=builder /app/main.js ./main.js
-COPY --from=builder /app/index.html ./index.html
-COPY --from=builder /app/lands.json ./lands.json
+COPY --from=builder /app/dist .
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
@@ -34,4 +32,4 @@ EXPOSE 4173
 
 ENV PORT 4173
 
-CMD ["npm", "run", "serve"]
+CMD ["npx", "-y", "http-server", "--port", "4173"]
