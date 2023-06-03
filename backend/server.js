@@ -41,6 +41,7 @@ async function serialToDepartment(serial) {
     5: [11.86, 54.77],
     3: [11.79, 55.23],
     7: [12.41, 55.62],
+    8: [9.99, 57.45],
   };
 
   let ret = undefined;
