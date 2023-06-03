@@ -116,7 +116,7 @@ const sketch = (p) => {
 
     setupGraphics();
 
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("wss://globe.rolandkajatin.com/ws/");
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       pingFromLocation(data["coords"], data["serial"]);
