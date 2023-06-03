@@ -34,4 +34,4 @@ EXPOSE 4173
 
 ENV PORT 4173
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "serve"]
