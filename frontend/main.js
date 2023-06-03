@@ -74,11 +74,29 @@ const sketch = (p) => {
   }
 
   let pings = [];
-  let totalMessages = 0;
+  let pingTimes = [];
+  let rollingAverageRate = 0;
 
   function pingFromLocation(coords, serial) {
     pings.push(new Ping(coords, serial));
-    totalMessages += 1;
+
+    // Calculate the rolling average rate of pings per second
+    let now = Date.now();
+    pingTimes.push(now);
+
+    // Remove times older than our window
+    while (pingTimes.length > 0 && now - pingTimes[0] > 10000) {
+      pingTimes.shift();
+    }
+
+    // The rolling average rate of pings per second is the number of pings in the window divided by the window duration in seconds
+    if (pingTimes.length > 1) {
+      let durationInSeconds =
+        (pingTimes[pingTimes.length - 1] - pingTimes[0]) / 1000;
+      rollingAverageRate = pingTimes.length / durationInSeconds;
+    } else {
+      rollingAverageRate = 0;
+    }
   }
 
   function setupGraphics() {
@@ -114,7 +132,7 @@ const sketch = (p) => {
     visLayer.fill(120, 150, 93);
     visLayer.textSize(24);
     visLayer.textAlign(p.LEFT, p.TOP);
-    visLayer.text("msg count: " + totalMessages, 10, 10);
+    visLayer.text(Number(rollingAverageRate).toFixed(2) + " ping/s", 10, 10);
 
     pings.forEach((ping) => {
       ping.grow();
